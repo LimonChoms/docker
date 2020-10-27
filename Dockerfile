@@ -9,7 +9,7 @@ COPY php.ini $PHP_INI_DIR/
 COPY www.conf /usr/local/etc/php-fpm.d/
 COPY entrypoint.sh /
 
-RUN apk add --no-cache tzdata \
+RUN apk add --no-cache tzdata p7zip unrar \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" >  /etc/timezone \
     && rm -rf /var/cache/apk/* \
