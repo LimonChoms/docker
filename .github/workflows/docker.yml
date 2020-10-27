@@ -25,11 +25,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: limonchoms/nextcloud
+          logout: true
       
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.0.1
         with:
           context: .
           file: ./Dockerfile
+          no-cache: true
           push: true
           tags: limonchoms/nextcloud:latest
