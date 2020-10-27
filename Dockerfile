@@ -13,6 +13,6 @@ RUN apk add --no-cache tzdata \
     && echo "Asia/Shanghai" >  /etc/timezone \
     && rm -rf /var/cache/apk/* \
     && echo '*/5 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data \
-    && usermod -u 99 www-data && groupmod -g 100 www-data
+    && sed -i 's/405:100/999:999/g' /etc/passwd && sed -i 's/82:82/99:100/g' /etc/passwd
 
 CMD ["php-fpm"]
