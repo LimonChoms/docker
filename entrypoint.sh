@@ -1,3 +1,5 @@
 #!/bin/sh
 
-/usr/sbin/crond
+/usr/sbin/crond &
+
+php-fpm
