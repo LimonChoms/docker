@@ -1,5 +1,9 @@
 #!/bin/sh
 
-/usr/sbin/crond &
+set -e
+
+/usr/sbin/crond
 
 php-fpm
+
+exec "$@"
