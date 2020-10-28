@@ -15,7 +15,8 @@ RUN apk add --no-cache tzdata p7zip unrar \
     && rm -rf /var/cache/apk/* \
     && rm /var/spool/cron/crontabs/root \
     && echo '*/5 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data \
-    && sed -i 's/405:100/999:999/g' /etc/passwd && sed -i 's/82:82/99:100/g' /etc/passwd \
+    && sed -i 's/405:100/999:1000/g' /etc/passwd && sed -i 's/82:82/99:100/g' /etc/passwd \
+    && sed -i 's/100/1000/g' /etc/group && sed -i 's/82/100/g' /etc/group \
     && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
