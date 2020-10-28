@@ -1,10 +1,7 @@
 name: Build and push Docker images
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  repository_dispatch:
   schedule:
     - cron: 0 16 * * 5
 
