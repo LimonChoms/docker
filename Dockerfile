@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:fpm
 LABEL maintainer="limonchoms@outlook.com"
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
