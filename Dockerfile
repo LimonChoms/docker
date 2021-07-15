@@ -2,8 +2,7 @@ FROM php:fpm-alpine
 LABEL maintainer="limonchoms@outlook.com"
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath gmp exif apcu memcached redis imagick pcntl opcache
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath gmp exif apcu memcached redis imagick pcntl opcache
     
 COPY php.ini $PHP_INI_DIR/
 COPY www.conf /usr/local/etc/php-fpm.d/
