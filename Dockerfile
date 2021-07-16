@@ -16,10 +16,8 @@ RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
     && dpkg-reconfigure --frontend noninteractive tzdata \
     && apt-get update && apt-get install -y p7zip unrar --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
-    && rm /var/spool/cron/crontabs/root \
-    && echo '*/5 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data \
-    && sed -i 's/405:100/999:1000/g' /etc/passwd && sed -i 's/82:82/99:100/g' /etc/passwd \
-    && sed -i 's/100/1000/g' /etc/group && sed -i 's/82/100/g' /etc/group \
+    && sed -i 's/33:33/99:100/g' /etc/passwd \
+    && sed -i 's/100/1000/g' /etc/group && sed -i 's/33/100/g' /etc/group \
     && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
