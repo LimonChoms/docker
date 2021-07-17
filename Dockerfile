@@ -1,20 +1,61 @@
-FROM php:fpm
+FROM nextcloud:fpm
 LABEL maintainer="limonchoms@outlook.com"
 
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath gmp exif apcu memcached redis imagick pcntl opcache
+RUN set -ex; \
+    \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        ffmpeg \
+        libmagickcore-6.q16-6-extra \
+        procps \
+        smbclient \
+        supervisor \
+        p7zip \
+        p7zip-full \
+#       libreoffice \
+    ; \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y p7zip p7zip-full supervisor rsync bzip2 busybox-static --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir /var/log/supervisord /var/run/supervisord \
+RUN set -ex; \
+    \
+    savedAptMark="$(apt-mark showmanual)"; \
+    \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libbz2-dev \
+        libc-client-dev \
+        libkrb5-dev \
+        libsmbclient-dev \
+    ; \
+    \
+    docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
+    docker-php-ext-install \
+        bz2 \
+        imap \
+    ; \
+    pecl install smbclient; \
+    docker-php-ext-enable smbclient; \
+    \
+# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
+    apt-mark auto '.*' > /dev/null; \
+    apt-mark manual $savedAptMark; \
+    ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
+        | awk '/=>/ { print $3 }' \
+        | sort -u \
+        | xargs -r dpkg-query -S \
+        | cut -d: -f1 \
+        | sort -u \
+        | xargs -rt apt-mark manual; \
+    \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    rm -rf /var/lib/apt/lists/*
+    
+RUN mkdir /var/log/supervisord /var/run/supervisord \
     && sed -i 's/33:33/99:100/g' /etc/passwd \
     && sed -i 's/100/1000/g' /etc/group && sed -i 's/33/100/g' /etc/group \
-    && mkdir -p /var/spool/cron/crontabs \
-    && echo '*/5 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data
     
 COPY supervisord.conf /
-COPY php.ini $PHP_INI_DIR/
-COPY www.conf /usr/local/etc/php-fpm.d/
-COPY cron.sh /
+
+ENV NEXTCLOUD_UPDATE=1
 
 CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
