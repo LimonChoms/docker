@@ -1,21 +1,18 @@
-FROM php:fpm-alpine
+FROM nextcloud:fpm
 LABEL maintainer="limonchoms@outlook.com"
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath gmp exif apcu memcached redis imagick pcntl opcache
+RUN install-php-extensions bz2 imagick
 
-COPY php.ini $PHP_INI_DIR/
-COPY www.conf /usr/local/etc/php-fpm.d/
-COPY entrypoint.sh /
+RUN apt-get update && apt-get install -y \
+    supervisor p7zip p7zip-full \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir /var/log/supervisord /var/run/supervisord \
+    && sed -i 's/33:33/99:100/g' /etc/passwd \
+    && sed -i 's/100/1000/g' /etc/group && sed -i 's/33/100/g' /etc/group
 
-RUN apk add --no-cache tzdata p7zip unrar \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" >  /etc/timezone \
-    && rm -rf /var/cache/apk/* \
-    && rm /var/spool/cron/crontabs/root \
-    && echo '*/5 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data \
-    && sed -i 's/405:100/999:1000/g' /etc/passwd && sed -i 's/82:82/99:100/g' /etc/passwd \
-    && sed -i 's/100/1000/g' /etc/group && sed -i 's/82/100/g' /etc/group \
-    && chmod +x /entrypoint.sh
-    
-ENTRYPOINT ["/entrypoint.sh"]
+COPY supervisord.conf /
+
+ENV NEXTCLOUD_UPDATE=1
+
+CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
