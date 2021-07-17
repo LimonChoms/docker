@@ -17,6 +17,4 @@ COPY php.ini $PHP_INI_DIR/
 COPY www.conf /usr/local/etc/php-fpm.d/
 COPY cron.sh /
 
-ENV NEXTCLOUD_UPDATE=1
-
 CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
