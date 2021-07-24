@@ -5,10 +5,7 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 RUN install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath gmp exif apcu memcached redis imagick pcntl opcache
 
 RUN sed -i 's/ main/ main contrib non-free/g' /etc/apt/sources.list \
-    && apt-get update && apt-get install -y supervisor unrar p7zip p7zip-full ffmpeg rsync bzip2 busybox-static\
-    && mkdir -p /var/spool/cron/crontabs \
-    && echo '*/5 * * * * php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data \
-    && mkdir /var/log/supervisord /var/run/supervisord \
+    && apt-get update && apt-get install -y unrar p7zip p7zip-full ffmpeg \
     && sed -i 's/33:33/99:100/g' /etc/passwd \
     && sed -i 's/100/1000/g' /etc/group && sed -i 's/33/100/g' /etc/group \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
@@ -28,9 +25,5 @@ RUN { \
         echo 'upload_max_filesize=1G'; \
         echo 'post_max_size=1G'; \
     } > /usr/local/etc/php/conf.d/nextcloud.ini
-    
-COPY supervisord.conf /
 
-COPY cron.sh /
-
-CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
+CMD ["php-fpm"]
