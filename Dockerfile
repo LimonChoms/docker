@@ -31,6 +31,6 @@ RUN { \
     
 COPY supervisord.conf /
 
-COPY *.sh /
+COPY cron.sh /
 
 CMD ["/usr/bin/supervisord", "-c", "/supervisord.conf"]
