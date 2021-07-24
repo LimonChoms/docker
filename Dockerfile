@@ -24,9 +24,9 @@ RUN { \
     } > /usr/local/etc/php/conf.d/opcache-recommended.ini; \
     echo 'apc.enable_cli=1' >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini; \
     { \
-        echo 'memory_limit=${PHP_MEMORY_LIMIT}'; \
-        echo 'upload_max_filesize=${PHP_UPLOAD_LIMIT}'; \
-        echo 'post_max_size=${PHP_UPLOAD_LIMIT}'; \
+        echo 'memory_limit=1G'; \
+        echo 'upload_max_filesize=1G'; \
+        echo 'post_max_size=1G'; \
     } > /usr/local/etc/php/conf.d/nextcloud.ini
     
 COPY supervisord.conf /
