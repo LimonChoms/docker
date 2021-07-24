@@ -7,8 +7,7 @@ RUN install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath 
 RUN sed -i 's/33:33/99:100/g' /etc/passwd \
     && sed -i 's/100/1000/g' /etc/group && sed -i 's/33/100/g' /etc/group \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -r /tmp/pear
+    && rm -rf /var/lib/apt/lists/* 
     
 RUN { \
         echo 'opcache.enable=1'; \
