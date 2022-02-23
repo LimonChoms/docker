@@ -16,7 +16,7 @@ RUN { \
         echo 'opcache.revalidate_freq=1'; \
         echo 'apc.enable_cli=1'; \
         echo 'memory_limit=1G'; \
-        echo 'upload_max_filesize=1G'; \
+        echo 'upload_max_filesize=10G'; \
         echo 'post_max_size=1G'; \
     } > /usr/local/etc/php/conf.d/nextcloud.ini
 
