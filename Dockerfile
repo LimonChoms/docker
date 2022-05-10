@@ -20,10 +20,10 @@ RUN { \
         echo 'post_max_size=1G'; \
     } > /usr/local/etc/php/conf.d/nextcloud.ini &&\
     { \
-        echo 'pm.max_children = 50'; \
-        echo 'pm.start_servers = 10'; \
-        echo 'pm.min_spare_servers = 10'; \
-        echo 'pm.max_spare_servers = 50'; \
+        echo 'pm.max_children = 50' \
+        echo 'pm.start_servers = 10' \
+        echo 'pm.min_spare_servers = 10' \
+        echo 'pm.max_spare_servers = 50' \
     } > /usr/local/etc/php-fpm.d/zz-docker.conf
 
 CMD ["php-fpm"]
