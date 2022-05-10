@@ -18,6 +18,12 @@ RUN { \
         echo 'memory_limit=1G'; \
         echo 'upload_max_filesize=10G'; \
         echo 'post_max_size=1G'; \
-    } > /usr/local/etc/php/conf.d/nextcloud.ini
+    } > /usr/local/etc/php/conf.d/nextcloud.ini &&\
+    { \
+        echo 'pm.max_children = 150'; \
+        echo 'pm.start_servers = 40'; \
+        echo 'pm.min_spare_servers = 40'; \
+        echo 'pm.max_spare_servers = 150'; \
+    } > /usr/local/etc/php-fpm.d/zz-docker.conf
 
 CMD ["php-fpm"]
