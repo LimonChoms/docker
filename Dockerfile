@@ -9,7 +9,7 @@ RUN sed -i 's/33:33/99:100/g' /etc/passwd \
     && sed -i 's/pm.max_children = 5/pm.max_children = 200/g' /usr/local/etc/php-fpm.d/www.conf \
     && sed -i 's/pm.start_servers = 2/pm.start_servers = 10/g' /usr/local/etc/php-fpm.d/www.conf \
     && sed -i 's/pm.min_spare_servers = 1/pm.min_spare_servers = 10/g' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's/pm.max_spare_servers = 3/pm.max_spare_servers = 150/g' /usr/local/etc/php-fpm.d/www.conf 
+    && sed -i 's/pm.max_spare_servers = 3/pm.max_spare_servers = 50/g' /usr/local/etc/php-fpm.d/www.conf 
     
 RUN { \
         echo 'opcache.enable=1'; \
