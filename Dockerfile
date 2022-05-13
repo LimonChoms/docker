@@ -4,8 +4,9 @@ LABEL maintainer="limonchoms@outlook.com"
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions gd zip pdo_mysql pdo_pgsql bz2 intl ldap imap bcmath gmp exif apcu memcached redis imagick pcntl opcache rar
 
-RUN sed -i 's/33:33/99:100/g' /etc/passwd \
-    && sed -i 's/100/1000/g' /etc/group && sed -i 's/33/100/g' /etc/group \
+RUN groupmod -g 1000 users \
+    && usermod -u 99 www-data \
+    && groupmod -g 100 www-data \
     && sed -i 's/pm.max_children = 5/pm.max_children = 200/g' /usr/local/etc/php-fpm.d/www.conf \
     && sed -i 's/pm.start_servers = 2/pm.start_servers = 10/g' /usr/local/etc/php-fpm.d/www.conf \
     && sed -i 's/pm.min_spare_servers = 1/pm.min_spare_servers = 10/g' /usr/local/etc/php-fpm.d/www.conf \
