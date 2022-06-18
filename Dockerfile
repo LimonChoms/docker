@@ -12,4 +12,8 @@ COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
     
 COPY ./nextcloud.ini /usr/local/etc/php/conf.d/nextcloud.ini
 
+USER www-data
+
+WORKDIR /var/www/html
+
 CMD ["php-fpm"]
