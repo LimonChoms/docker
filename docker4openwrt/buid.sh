@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_PATH="/home/user"
+BUILD_PATH="/home/limons"
 echo '--- Start build script.---'
 cd ${BUILD_PATH} && rm -rf openwrt &&
 
