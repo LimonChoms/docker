@@ -8,10 +8,10 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     
-RUN usermod -u 99 users && \
-    groupmod -g 100 users
+RUN groupadd limons && usermod -u 99 limons && \
+    groupmod -g 100 limons
 
-USER user
-WORKDIR /home/user
+USER limons
+WORKDIR /home/limons
 
-CMD ["/home/user/buid.sh"]
+CMD ["/home/limons/buid.sh"]
