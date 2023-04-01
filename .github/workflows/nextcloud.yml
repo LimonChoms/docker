@@ -1,4 +1,4 @@
-name: Build and push Docker images
+name: nextcloud
 
 on:
   workflow_dispatch:
