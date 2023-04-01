@@ -21,8 +21,8 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./docker4openwrt
+          file: ./docker4openwrt/Dockerfile
           no-cache: true
           push: true
           tags: limonchoms/docker4openwrt:latest
