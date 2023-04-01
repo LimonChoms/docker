@@ -14,4 +14,4 @@ RUN groupmod -g 1000 users && useradd limons && usermod -u 99 limons && \
 USER limons
 WORKDIR /home/limons
 
-CMD ["/home/limons/buid.sh"]
+CMD ["/home/limons/build.sh"]
