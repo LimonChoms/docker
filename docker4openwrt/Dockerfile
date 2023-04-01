@@ -8,7 +8,7 @@ RUN apt-get update -qq && apt-get upgrade -qqy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     
-RUN groupadd limons && usermod -u 99 limons && \
+RUN useradd limons && usermod -u 99 limons && \
     groupmod -g 100 limons
 
 USER limons
