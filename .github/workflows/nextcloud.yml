@@ -19,16 +19,15 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build and push Docker images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
-          context: ./nextcloud
-          file: ./nextcloud/Dockerfile
+          context: "{{defaultContext}}:nextcloud"
           no-cache: true
           push: true
           tags: limonchoms/nextcloud:latest
 
       - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           retain_days: 1
           keep_minimum_runs: 3
