@@ -21,7 +21,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-          context: "{{defaultContext}}:nextcloud"
+          context: ./nextcloud
           no-cache: true
           push: true
           tags: limonchoms/nextcloud:latest
