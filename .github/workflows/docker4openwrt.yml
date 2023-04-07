@@ -22,7 +22,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./docker4openwrt
-          file: ./docker4openwrt/Dockerfile
           no-cache: true
           push: true
           tags: limonchoms/docker4openwrt:latest
