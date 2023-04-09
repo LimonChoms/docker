@@ -8,7 +8,7 @@ RUN groupmod -g 1000 users \
     && usermod -u 99 www-data \
     && groupmod -g 100 www-data 
     
-COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
     
 COPY ./nextcloud.ini /usr/local/etc/php/conf.d/nextcloud.ini
 
