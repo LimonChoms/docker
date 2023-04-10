@@ -10,13 +10,3 @@ RUN groupmod -g 1000 users \
     && chown -R jellyfin:jellyfin /jellyfin /config /cache
 
 USER jellyfin
-
-EXPOSE 8096
-VOLUME /cache /config
-ENTRYPOINT ["./jellyfin/jellyfin", \
-    "--datadir", "/config", \
-    "--cachedir", "/cache", \
-    "--ffmpeg", "/usr/lib/jellyfin-ffmpeg/ffmpeg"]
-
-HEALTHCHECK --interval=30s --timeout=30s --start-period=10s --retries=3 \
-     CMD curl -Lk -fsS "${HEALTHCHECK_URL}" || exit 1
