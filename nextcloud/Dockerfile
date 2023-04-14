@@ -20,6 +20,8 @@ COPY ./nextcloud.ini /usr/local/etc/php/conf.d/nextcloud.ini
 
 COPY supervisord.conf /
 
+COPY cron.sh /
+
 EXPOSE 9000
 
 WORKDIR /var/www/html
