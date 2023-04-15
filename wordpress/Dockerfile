@@ -11,5 +11,11 @@ RUN groupmod -g 1000 users \
 COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf 
 
 COPY ./wordpress.ini /usr/local/etc/php/conf.d/wordpress.ini
-    
+
+USER www-data
+
+EXPOSE 9000
+
+WORKDIR /var/www/html
+
 CMD ["php-fpm"]
