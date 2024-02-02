@@ -1,4 +1,4 @@
-name: wordpress
+name: frpc
 
 on:
   workflow_dispatch:
