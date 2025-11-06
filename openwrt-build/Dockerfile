@@ -1,31 +1,9 @@
-FROM docker.io/debian:stable-slim
+FROM ubuntu:24.04
 LABEL maintainer="limonchoms@outlook.com"
 
-ENV GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y \
+    build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-setuptools rsync swig unzip zlib1g-dev file wget ca-certificates curl\
+    && apt-get clean autoclean -y && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && useradd -m -s '/bin/bash' -U 'buildbot'
+
 WORKDIR /workdir
-
-RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests --yes \
-    'build-essential' \
-    'ca-certificates' \
-    'clang' \
-    'flex' \
-    'bison' \
-    'g++' \
-    'gawk' \
-    'gcc-multilib' \
-    'gettext' \
-    'git' \
-    'libncurses5-dev' \
-    'libssl-dev' \
-    'python3-distutils' \
-    'rsync' \
-    'unzip' \
-    'zlib1g-dev' \
-    'file' \
-    'wget' \
-  && \
-  rm -f -r '/var/lib/apt/' && \
-  rm -f -r '/var/cache/apt/' && \
-  useradd -m -s '/bin/bash' -U 'buildbot'
-
 USER buildbot
